@@ -1,0 +1,27 @@
+<h1>Weather</h1>
+<form>
+    Enter your city or zip code <input name="args" placeholder="city or zip"><br><br>
+    <button type="submit" class="btn btn-info">Go!</button><br><br>
+  </form>
+  <hr>
+  <% if @weather != {}  %>
+    <h3><%= @weather['name'] %></h3>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>country: <%= @weather['sys']['country'] %></small><br>
+    
+    &nbsp;&nbsp;&nbsp;<img src="http://openweathermap.org/img/w/<%= @weather['weather'][0]['icon'] %>.png"> <%= @weather['main']['temp'] %> deg F&nbsp;&nbsp;&nbsp;<small>(<%=@weather['main']['temp_min']%>/<%=@weather['main']['temp_max']%>)</small><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;weather conditions: <%= @weather['weather'][0]['description'] %><br>
+  <% else %>
+    No data found. You can try a <b>zipcode</b> or <b>city,state,country</b>.<br>
+    <small>e.g. Madison, WI, US</small>
+  <% end %>
+  <hr><br>
+  <% if @weather != {} %>
+  <div>
+     <iframe width="500" height="400" frameborder="0" src="https://www.bing.com/maps/embed?h=400&w=500&cp=<%= @weather['coord']['lat'] %>~<%= @weather['coord']['lon'] %>&lvl=11&typ=s&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
+     </iframe>
+     <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
+        <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=<%= @weather['coord']['lat'] %>~<%= @weather['coord']['lon'] %>&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
+        <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=<%= @weather['coord']['lat'] %>~<%= @weather['coord']['lon'] %>&amp;sty=r&amp;lvl=11&amp;rtp=~pos.<%= @weather['coord']['lat'] %>_<%= @weather['coord']['lon'] %>____&amp;FORM=MBEDLD">Get Directions</a>
+    </div>
+  <% end %>
